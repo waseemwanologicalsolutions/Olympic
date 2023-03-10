@@ -18,11 +18,11 @@ In order to run the project please follow below steps.
 1- Clone or download zip
 2- Open the folder 'Olympic'
 3- Double tap 'Olympic.xcodeproj'
-4- Once Xcode finsih loding and indexing, select Simulator from the devices list
+4- Once Xcode finsih the loading and indexing, select Simulator from the devices list
 5- Run the project
 
 # How to use the app
-After splash screen app will show 'Olymic Athletes' screen which is home screen of the app,
+After splash screen app will show 'Olympic Athletes' screen which is home screen of the app,
 This screen shows list of games, and in each game there is athletes list being shown,
 Scroll vertically to see more games
 Scroll horizontally to see more athletes
