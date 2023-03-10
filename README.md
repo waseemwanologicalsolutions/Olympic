@@ -29,7 +29,7 @@ Scroll horizontally to see more athletes
 Tap on athlete photo view details about athlete games and medals
 In case no app shows error, pull down to refersh the screen
 
-# Understaning Implementation
+# Understanding Implementation
 Project architecure is MVVM, app has two scenes(navigations)
 ## HomeSceneView: 
 its home screen which shows games list and athleses inside each game
