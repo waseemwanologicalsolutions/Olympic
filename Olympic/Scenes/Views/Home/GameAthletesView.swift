@@ -36,9 +36,10 @@ struct GameAthletesView: View {
                         ForEach(vmGameAthletesView.athletes) { athlete in
                             AthleteCardView(athlete: athlete)
                                 .onTapGesture{
+                                    print("tapped")
                                     vmHomeScene.selectedGame = game
                                     vmHomeScene.selectedAthlete = athlete
-                                    vmHomeScene.showDetailsScreen = true
+                                    vmHomeScene.showDetailsScreen.toggle()
                                 }
                         }
                         if vmGameAthletesView.athletes.isEmpty{
@@ -55,7 +56,7 @@ struct GameAthletesView: View {
         .onChange(of: vmHomeScene.isGamesLoaded){ newVal in
             Task{
                 if newVal == true{
-                    vmGameAthletesView.getGameAthletes(game)
+                    vmGameAthletesView.getGameAthletes(game, globalAthletes: vmHomeScene.athletes)
                 }
             }
         }
@@ -73,7 +74,7 @@ struct GameAthletesView: View {
         }.onTapGesture {
             vmGameAthletesView.isAPILoaded = false
             vmGameAthletesView.isLoading = true
-            vmGameAthletesView.getGameAthletes(game)
+            vmGameAthletesView.getGameAthletes(game, globalAthletes: vmHomeScene.athletes)
         }
     }
 }

@@ -15,7 +15,6 @@ struct GameModel: Decodable, Identifiable {
         case id = "game_id"
         case city = "city"
         case year = "year"
-        case athletes = "athletes"
     }
     
     init(id: String?, city: String?,year:String?){

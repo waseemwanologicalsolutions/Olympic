@@ -37,10 +37,16 @@ struct HomeSceneView: View {
             }
         }
         .onAppear{
-            if vmHomeScene.games.isEmpty{
-                vmHomeScene.isLoading = true
-                vmHomeScene.games = HomeSceneViewModelData.generateData()
-                vmHomeScene.getAllGames()
+            Task{
+                if vmHomeScene.games.isEmpty{
+                    vmHomeScene.isLoading = true
+                    /// generate temp data for skelton loading animation
+                    vmHomeScene.games = HomeSceneViewModelData.generateData()
+                    /// first fetch athletes alongwith results
+                    vmHomeScene.athletes = try await vmHomeScene.getAllAthletes()
+                    /// now finally get games
+                    vmHomeScene.getAllGames()
+                }
             }
         }
         .alert(isPresented: $vmHomeScene.showAlert) {
@@ -56,7 +62,7 @@ struct HomeSceneView: View {
         .navigationTitle("Olympic Athletes")
         .navigationBarTitleDisplayMode(.inline)
         .edgesIgnoringSafeArea(.bottom)
-        .padding([.top], 15)
+        .padding([.top], 1)
         .navigationDestination(isPresented: $vmHomeScene.showDetailsScreen) {
             DetailsAthleteSceneView()
         }

@@ -110,5 +110,24 @@ class NetworkManager{
                 completionHandler(.success(returnedData))
             }
             .store(in: &cancellables)
+    }
+    
+    func executeNetworkRequestAsync(_ url:URL, httpMethod:String) async throws ->Data {
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = httpMethod
+        request.setValue(AppConstants.keys.jsonContentType, forHTTPHeaderField: AppConstants.keys.contentType)
+        //request.httpBody = try JSONEncoder().encode(T)
+        do{
+            let (data, response) = try await URLSession.shared.data(for: request)
+            guard response is HTTPURLResponse else {
+                throw APIError.requestFailedReason(reason: "Bad response")
+            }
+            return data
+        }catch(let error){
+            throw APIError.requestFailedReason(reason: error.localizedDescription)
         }
+        
+    }
+    
 }

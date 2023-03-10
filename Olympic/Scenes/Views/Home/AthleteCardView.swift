@@ -27,6 +27,7 @@ struct AthleteCardView: View {
                 HStack{
                     Text((athlete.surname ?? "") + " " + (athlete.name ?? ""))
                         .font(.subheadline)
+                    //Text(String(athlete.globalScore))
                 }
             }
         }.padding(.horizontal)

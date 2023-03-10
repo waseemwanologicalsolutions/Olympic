@@ -21,7 +21,7 @@ class GameAthletesViewModel:ObservableObject{
     let networkManger = NetworkManager()
     
     /// fetch game athletes list
-    func getGameAthletes(_ game:GameModel){
+    func getGameAthletes(_ game:GameModel, globalAthletes:[AthleteModel]){
         self.isLoading = true
         self.networkManger.executeNetworkRequest(UrlManager.gameAthletesUrl(game.id ?? ""),httpMethod: AppConstants.httpMethod.get, completionHandler: { (response) in
             switch response{
@@ -36,7 +36,25 @@ class GameAthletesViewModel:ObservableObject{
                     let decoderParser = JSONDecoder()
                     decoderParser.dateDecodingStrategy = .iso8601
                     do{
-                        self.athletes = try decoderParser.decode([AthleteModel].self, from: data)
+                        var athletesList = try decoderParser.decode([AthleteModel].self, from: data)
+                        /// make score based on medals
+                        for item in athletesList{
+                            for item2 in globalAthletes{
+                                if item.id == item2.id{
+                                    if let medalGame = item2.medals.first(where: {$0.year == Int(game.year ?? "0")}){
+                                        let scoreGold = (medalGame.gold ?? 0) * AppConstants.MedalScore.gold
+                                        let scoreSilver = (medalGame.silver ?? 0) * AppConstants.MedalScore.silver
+                                        let scoreBronze = (medalGame.bronze ?? 0) * AppConstants.MedalScore.bronze
+                                        let total = scoreGold + scoreSilver + scoreBronze
+                                        if let index = athletesList.firstIndex(where: {$0.id == item.id}){
+                                            athletesList[index].globalScore = total
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        self.athletes = athletesList.sorted(by: {$0.globalScore > $1.globalScore})
+                        
                     }catch(let error){
                        print("error in viewmodel=",error)
                     }

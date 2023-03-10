@@ -15,6 +15,8 @@ struct AthleteModel: Decodable, Identifiable {
     var weight:Int?
     var height:Int?
     var image: String?
+    var medals = [MedalModel]()
+    var globalScore:Int = 0
     
     enum CodingKeys:String,CodingKey{
         case id = "athlete_id"

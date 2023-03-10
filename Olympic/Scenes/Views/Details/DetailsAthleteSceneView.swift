@@ -41,7 +41,7 @@ struct DetailsAthleteSceneView: View {
                                 .padding()
                             Spacer()
                         }
-                        Text(vmHomeScene.selectedAthlete.bio ?? "")
+                        Text((vmHomeScene.selectedAthlete.bio ?? "").markdownToAttributed())
                             .padding(.horizontal)
                             .padding([.bottom], 25)
                     }
@@ -49,11 +49,18 @@ struct DetailsAthleteSceneView: View {
                 }.redacted(if: vmDetailsAthleteSceneViewModel.isAPILoaded == false)
             }
         }
+        .toolbar {
+            Link(destination: URL(string: "https://www.youtube.com/watch?v=4AhgSybfRz4")!) {
+                Image("youtube").resizable().frame(width: 28, height: 28)
+            }
+        }
         .onAppear{
-            if vmDetailsAthleteSceneViewModel.isAPILoaded == false{
-                vmDetailsAthleteSceneViewModel.isLoading = true
-                vmDetailsAthleteSceneViewModel.medals = DetailsAthleteSceneViewModelData.generateData()
-                vmDetailsAthleteSceneViewModel.getAthleteResults(vmHomeScene.selectedAthlete)
+            Task{
+                if vmDetailsAthleteSceneViewModel.isAPILoaded == false{
+                    vmDetailsAthleteSceneViewModel.isLoading = true
+                    vmDetailsAthleteSceneViewModel.medals = DetailsAthleteSceneViewModelData.generateData()
+                    vmDetailsAthleteSceneViewModel.getAthleteResults(vmHomeScene.selectedAthlete)
+                }
             }
         }
         .alert(isPresented: $vmDetailsAthleteSceneViewModel.showAlert) {

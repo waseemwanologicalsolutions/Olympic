@@ -31,4 +31,10 @@ enum AppConstants {
         static let put = "PUT"
     }
     
+    enum MedalScore {
+        static let gold = 5
+        static let silver = 3
+        static let bronze = 1
+    }
+    
 }

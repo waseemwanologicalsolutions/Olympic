@@ -10,4 +10,12 @@ extension String{
     var encodeURL:String{
         return self.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? ""
     }
+    
+    func markdownToAttributed() -> AttributedString {
+        do {
+            return try AttributedString(markdown: self) /// convert to AttributedString
+        } catch {
+            return AttributedString("Error parsing markdown: \(error)")
+        }
+    }
 }
