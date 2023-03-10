@@ -10,7 +10,7 @@ SwiftUI, Xcode14
 
 # Requirements
 - Xcode v 14+
-- Inernet connection
+- Internet connection
 - Simulator iOS 16+
 
 # How to run the project
